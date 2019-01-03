@@ -1,9 +1,7 @@
 package com.example.esauhp.musicevent.Adapter;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +13,12 @@ import android.widget.Toast;
 import com.example.esauhp.musicevent.Album;
 import com.example.esauhp.musicevent.R;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> implements View.OnClickListener{
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
     private Context context;
     private List<Album> albumList;
-    private View.OnClickListener listener;
+
     public AlbumAdapter(Context context, List<Album> objects) {
         this.context=context;
         this.albumList = objects;
@@ -39,14 +35,21 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder viewHolder, int i) {
         final Album album = albumList.get(i);
+        viewHolder.orden.setText(i+1+"");
+        viewHolder.nameArtist.setText(album.getNombreArtista());
+        viewHolder.nameAlbum.setText(album.getNombreAlbum());
+
+        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
 
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "El álbum ha sido añadida a favoritos", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -58,12 +61,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
     }
 
-    @Override
-    public void onClick(View v) {
-        if(listener!=null){
-            listener.onClick(v);
-        }
-    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -84,5 +82,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
         }
 
+    }
+    public interface OnButtonClickedListener{
+        void onButtonClicked(View v, Album album);
     }
 }
