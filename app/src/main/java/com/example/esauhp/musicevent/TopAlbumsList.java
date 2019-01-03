@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +23,8 @@ import com.example.esauhp.musicevent.ViewModel.ViewModelAlbum;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.CONNECTIVITY_SERVICE;
 
 public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClickedListener {
 
@@ -56,22 +60,9 @@ public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClic
     public void onResume() {
         super.onResume();
 
-        viewModelAlbum = ViewModelProviders.of(this).get(ViewModelAlbum.class);
-        viewModelAlbum.getAlbum().observe(this, new Observer<List<Album>>() {
-            @Override
-            public void onChanged(@Nullable List<Album> albums) {
-                listaAlbum.clear();
-                if(albums!=null){
-                    listaAlbum.addAll(albums);
-                    adapter.notifyDataSetChanged();
-                }else{
-                    mensaje.setText("No se ha encontrado ningún álbum");
-                }
-            }
 
-        });
-        /*
-        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= connectivityManager.getActiveNetworkInfo();
         boolean conectar= networkInfo!=null && networkInfo.isConnected();
         if(conectar){
@@ -89,7 +80,7 @@ public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClic
                 }
 
             });
-        }*/
+        }
     }
 
     @Override

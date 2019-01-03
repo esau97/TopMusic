@@ -14,8 +14,8 @@
         android:id="@+id/fragment3"
         android:name="com.example.esauhp.musicevent.TopArtistFiltrar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"/>
+        android:layout_height="wrap_content"
+        />
 
     <fragment
         android:id="@+id/fragment4"

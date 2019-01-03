@@ -10,34 +10,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.esauhp.musicevent.Album;
+import com.example.esauhp.musicevent.Artist;
 import com.example.esauhp.musicevent.R;
 
 import java.util.List;
+//RecyclerView.Adapter<AlbumAdapter.ViewHolder>
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
+public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.ViewHolder>{
     private Context context;
-    private List<Album> albumList;
+    private List<Artist> artistList;
 
-    public AlbumAdapter(Context context, List<Album> objects) {
+    public TopArtistAdapter(Context context, List<Artist> objects) {
         this.context=context;
-        this.albumList = objects;
+        this.artistList = objects;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.album_list, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+    public TopArtistAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.artist_list, viewGroup, false);
+        TopArtistAdapter.ViewHolder viewHolder = new TopArtistAdapter.ViewHolder(view);
         return viewHolder;
     }
 
+
+
     @Override
-    public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder viewHolder, int i) {
-        final Album album = albumList.get(i);
+    public void onBindViewHolder(@NonNull TopArtistAdapter.ViewHolder viewHolder, int i) {
+        final Artist artist = artistList.get(i);
         viewHolder.orden.setText(i+1+"");
-        viewHolder.nameArtist.setText(album.getNombreArtista());
-        viewHolder.nameAlbum.setText(album.getNombreAlbum());
+        viewHolder.nameArtist.setText(artist.getNombreArtista());
         viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,8 +53,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        if(albumList!=null){
-            return albumList.size();
+        if(artistList!=null){
+            return artistList.size();
         }else{
             return 0;
         }
@@ -64,24 +66,22 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView orden;
-        public ImageView imageAlbum;
-        public TextView nameAlbum;
+        public ImageView imageArtist;
         public TextView nameArtist;
         public ImageView imagenFavorite;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            orden = (TextView) itemView.findViewById(R.id.ordenAlbum);
-            imageAlbum = (ImageView) itemView.findViewById(R.id.imagenAlbum);
-            nameAlbum = (TextView) itemView.findViewById(R.id.albumNameAlbum);
-            nameArtist = (TextView) itemView.findViewById(R.id.artistNameAlbum);
-            imagenFavorite = (ImageView) itemView.findViewById(R.id.imagenFavoritoAlbum);
+            orden = (TextView) itemView.findViewById(R.id.ordenArtist);
+            imageArtist = (ImageView) itemView.findViewById(R.id.imagenArtist);
+            nameArtist = (TextView) itemView.findViewById(R.id.artistNameArtist);
+            imagenFavorite = (ImageView) itemView.findViewById(R.id.imagenFavoritoArtist);
 
         }
 
     }
     public interface OnButtonClickedListener{
-        void onButtonClicked(View v, Album album);
+        void onButtonClicked(View v, Artist artist);
     }
 }

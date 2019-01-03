@@ -6,6 +6,18 @@ public class Artist implements Serializable {
     private String nombreArtista;
     private int orden;
     private String URL;
+    private boolean favorite;
+
+    public Artist() {
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 
     public String getNombreArtista() {
         return nombreArtista;

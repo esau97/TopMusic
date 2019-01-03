@@ -8,6 +8,18 @@ public class Album implements Serializable {
     private int orden;
     private String urlImage;
     private boolean favorite;
+    public Album(){
+
+    }
+    public  Album(String nombreAlbum){
+        this.nombreAlbum=nombreAlbum;
+    }
+
+    public Album(String nombreArtista, String nombreAlbum, int orden) {
+        this.nombreArtista = nombreArtista;
+        this.nombreAlbum = nombreAlbum;
+        this.orden = orden;
+    }
 
     public String getNombreArtista() {
         return nombreArtista;
