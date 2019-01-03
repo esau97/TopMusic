@@ -9,6 +9,7 @@
 
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardAlbum"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -31,6 +32,7 @@
                 android:textSize="16sp"
                 tools:text="1" />
             <ImageView
+                android:id="@+id/imagenAlbum"
                 android:layout_marginStart="8dp"
                 android:layout_width="40dp"
                 android:layout_height="match_parent" />
@@ -45,7 +47,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/albumName"
+                    android:id="@+id/albumNameAlbum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Album Name"
@@ -53,7 +55,7 @@
                     android:textSize="16sp"
                     />
                 <TextView
-                    android:id="@+id/artistName"
+                    android:id="@+id/artistNameAlbum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -63,6 +65,7 @@
 
             </LinearLayout>
             <ImageView
+                android:id="@+id/imagenFavoritoAlbum"
                 android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

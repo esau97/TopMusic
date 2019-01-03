@@ -9,7 +9,7 @@
 
     <TextView
 
-        android:id="@+id/magnitud"
+        android:id="@+id/ordenSong"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_gravity="center_vertical"
@@ -18,6 +18,8 @@
         android:textSize="16sp"
         tools:text="1" />
     <ImageView
+        android:layout_marginStart="8dp"
+        android:id="@+id/imagenSong"
         android:layout_width="40dp"
         android:layout_height="match_parent" />
 
@@ -32,7 +34,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/songName"
+            android:id="@+id/songNameSong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Song Name"
@@ -40,7 +42,7 @@
             android:textSize="16sp"
             />
         <TextView
-            android:id="@+id/artistName"
+            android:id="@+id/artistNameSong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -50,6 +52,8 @@
 
     </LinearLayout>
     <ImageView
+        android:layout_marginStart="8dp"
+        android:id="@+id/imagenFavoritoSong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_star_border_white_24dp"
