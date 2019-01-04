@@ -52,7 +52,7 @@
                 android:id="@+id/artistNameArtist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:textStyle="bold"
                 android:ellipsize="end"
                 android:textSize="16sp"
                 tools:text="Artist name" />
@@ -63,7 +63,7 @@
             android:id="@+id/imagenFavoritoArtist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_star_border_white_24dp"
+            android:background="@drawable/ic_star_border_black_24dp"
             android:layout_gravity="center"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>

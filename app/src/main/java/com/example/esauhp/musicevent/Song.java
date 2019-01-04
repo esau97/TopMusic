@@ -3,16 +3,25 @@ package com.example.esauhp.musicevent;
 import java.io.Serializable;
 
 public class Song implements Serializable {
-    private String URL;
+    private String UrlImage;
     private String songName;
     private String artistName;
+    private boolean favorite;
 
-    public String getURL() {
-        return URL;
+    public boolean isFavorite() {
+        return favorite;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getUrlImage() {
+        return UrlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        UrlImage = urlImage;
     }
 
     public String getSongName() {

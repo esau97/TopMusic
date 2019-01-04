@@ -74,34 +74,36 @@ public class QueryUtils {
         }
         return listaArtist;
     }
-    public static List<Artist> extraerCanciones(String result){
-        List<Artist> listaArtist = new ArrayList<>();
+    public static List<Song> extraerSongs(String result){
+        List<Song> listaSong = new ArrayList<>();
         try{
             JSONObject root = new JSONObject(result);
-            JSONObject artist = root.getJSONObject("topartists");
-            JSONArray arrayArtist = artist.getJSONArray("artist");
+            JSONObject artist = root.getJSONObject("tracks");
+            JSONArray arrayArtist = artist.getJSONArray("track");
 
             for (int i = 0; i < arrayArtist.length(); i++) {
 
                 JSONObject al = arrayArtist.getJSONObject(i);
 
-                Artist artista = new Artist();
-                artista.setFavorite(false);
-                artista.setNombreArtista(al.getString("name"));
-
-                /*JSONArray photo = new JSONArray(ob.getJSONArray("image"));
-                album.setUrlImage(photo.getString(1));*/
-                listaArtist.add(artista);
+                Song song = new Song();
+                song.setFavorite(false);
+                song.setSongName(al.getString("name"));
+                JSONObject nameArtist = al.getJSONObject("artist");
+                song.setArtistName(nameArtist.getString("name"));
+                JSONArray photo = al.getJSONArray("image");
+                JSONObject p = photo.getJSONObject(1);
+                song.setUrlImage(p.getString("#text"));
+                listaSong.add(song);
 
             }
-            for (int i = 0; i < listaArtist.size(); i++) {
-                Log.i("Prueba",listaArtist.get(i).getNombreArtista().toString());
+            for (int i = 0; i < listaSong.size(); i++) {
+                Log.i("Prueba",listaSong.get(i).getSongName().toString());
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return listaArtist;
+        return listaSong;
     }
 
 }
