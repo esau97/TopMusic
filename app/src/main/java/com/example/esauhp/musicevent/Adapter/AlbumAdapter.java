@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.esauhp.musicevent.Album;
 import com.example.esauhp.musicevent.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         viewHolder.orden.setText(i+1+"");
         viewHolder.nameArtist.setText(album.getNombreArtista());
         viewHolder.nameAlbum.setText(album.getNombreAlbum());
+        Picasso.get().load(album.getUrlImage()).into(viewHolder.imageAlbum);
+
         viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override

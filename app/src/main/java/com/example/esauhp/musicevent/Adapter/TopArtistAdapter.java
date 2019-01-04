@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.esauhp.musicevent.Artist;
 import com.example.esauhp.musicevent.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 //RecyclerView.Adapter<AlbumAdapter.ViewHolder>
@@ -40,6 +41,7 @@ public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.View
         final Artist artist = artistList.get(i);
         viewHolder.orden.setText(i+1+"");
         viewHolder.nameArtist.setText(artist.getNombreArtista());
+        Picasso.get().load(artist.getUrlImage()).into(viewHolder.imageArtist);
         viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override

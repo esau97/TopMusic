@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Artist implements Serializable {
     private String nombreArtista;
     private int orden;
-    private String URL;
+    private String urlImage;
     private boolean favorite;
 
     public Artist() {
@@ -35,11 +35,11 @@ public class Artist implements Serializable {
         this.orden = orden;
     }
 
-    public String getURL() {
-        return URL;
+    public String getUrlImage() {
+        return urlImage;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 }

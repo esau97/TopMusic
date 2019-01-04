@@ -58,4 +58,5 @@ public class ViewModelAlbum extends AndroidViewModel {
         requestQueue.add(request);
 
     }
+
 }
