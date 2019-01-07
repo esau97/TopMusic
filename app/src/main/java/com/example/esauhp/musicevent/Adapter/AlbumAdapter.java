@@ -41,7 +41,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         viewHolder.nameAlbum.setText(album.getNombreAlbum());
         Picasso.get().load(album.getUrlImage()).into(viewHolder.imageAlbum);
 
-        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
+        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_black_24dp);
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

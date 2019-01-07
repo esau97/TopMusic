@@ -1,6 +1,5 @@
 package com.example.esauhp.musicevent.Fragments.Favorites;
 
-import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -15,9 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.esauhp.musicevent.Adapter.FavoriteAdapter;
 import com.example.esauhp.musicevent.Artist;
@@ -40,10 +37,6 @@ public class FavoriteArtistFragment extends Fragment implements FavoriteAdapter.
 
     public FavoriteArtistFragment() {
     }
-
-    Activity activity;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,20 +48,7 @@ public class FavoriteArtistFragment extends Fragment implements FavoriteAdapter.
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //adapter = new TopArtistAdapter(getContext(),listaArtist);
-        adapter = new FavoriteAdapter(getContext(), listaArtist, new FavoriteAdapter.OnButtonClickedListener() {
-            @Override
-            public void onButtonClicked(View v, Artist artist) {
-                if(v.getId()==R.id.favoriteArtist){
-                    if(artist.isFavorite()){
-                        Toast.makeText(getContext(), "El artista ya se encuentra en favoritos", Toast.LENGTH_SHORT).show();
-                    }else{
-                        viewModelArtist.deleteArtist(artist);
-                        Toast.makeText(getContext(), "El artista ha sido añadido a favorito", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            }
-        });
+        adapter = new FavoriteAdapter(getContext(), listaArtist, this);
         recyclerView.setAdapter(adapter);
 
         return view;
@@ -84,7 +64,7 @@ public class FavoriteArtistFragment extends Fragment implements FavoriteAdapter.
         boolean conectar= networkInfo!=null && networkInfo.isConnected();
         if(conectar){
             viewModelArtist = ViewModelProviders.of(this).get(ViewModelArtist.class);
-            viewModelArtist.getArtist().observe(this, new Observer<List<Artist>>() {
+            viewModelArtist.getArtistFav().observe(this, new Observer<List<Artist>>() {
                 @Override
                 public void onChanged(@Nullable List<Artist> artist) {
                     listaArtist.clear();
@@ -109,14 +89,12 @@ public class FavoriteArtistFragment extends Fragment implements FavoriteAdapter.
     @Override
     public void onButtonClicked(View v, Artist artist) {
         if(artist.isFavorite()){
-            ImageView imageView = v.findViewById(R.id.imagenFavoritoArtist);
-            imageView.setImageResource(R.drawable.ic_star_border_white_24dp);
-            artist.setFavorite(false);
-        }else {
-            ImageView imageView = v.findViewById(R.id.imagenFavoritoArtist);
-            imageView.setImageResource(R.drawable.ic_star_white_24dp);
-            artist.setFavorite(true);
+
+
         }
+        viewModelArtist.deleteArtist(artist);
+
+
     }
 
     public interface OnFragmentInteractionListener{

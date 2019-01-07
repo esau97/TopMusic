@@ -66,7 +66,7 @@ public class ViewModelArtist extends AndroidViewModel {
 
     }
     public LiveData<List<Artist>> getArtistFav(){
-        return (LiveData<List<Artist>>) listaArtist;
+        return  listaArtistaFavoritos;
     }
     public void addArtist(Artist artist){
         new AsyncAddArtist().execute(artist);

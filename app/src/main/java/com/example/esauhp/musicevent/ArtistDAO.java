@@ -16,6 +16,8 @@ public interface ArtistDAO {
     @Delete
     public int deleteArtist(Artist artist);
 
+
+
     @Query("SELECT * FROM artist WHERE id=:id")
     public Artist getArtist(long id);
 

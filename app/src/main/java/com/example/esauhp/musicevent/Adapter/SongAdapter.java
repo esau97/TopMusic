@@ -42,7 +42,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
         viewHolder.songNameSong.setText(song.getSongName());
         Picasso.get().load(song.getUrlImage()).into(viewHolder.imageSong);
 
-        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
+        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_black_24dp);
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

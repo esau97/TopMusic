@@ -48,7 +48,8 @@ public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.View
         viewHolder.orden.setText(i+1+"");
         viewHolder.nameArtist.setText(artist.getNombreArtista());
         Picasso.get().load(artist.getUrlImage()).into(viewHolder.imageArtist);
-        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
+
+        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_black_24dp);
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

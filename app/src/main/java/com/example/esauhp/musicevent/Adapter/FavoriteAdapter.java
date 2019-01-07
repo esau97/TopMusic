@@ -42,14 +42,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         final Artist artist = artistList.get(i);
         viewHolder.nameArtistFavorite.setText(artist.getNombreArtista());
         Picasso.get().load(artist.getUrlImage()).into(viewHolder.imageArtist);
-        //viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
-        /*viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
+        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_black_24dp);
+        viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "El artista ha sido añadido a favorito", Toast.LENGTH_SHORT).show();
-
+                listener.onButtonClicked(v,artist);
             }
-        });*/
+        });
     }
 
 
@@ -76,7 +75,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
             imageArtist = (ImageView) itemView.findViewById(R.id.imageArtistFavorite);
             nameArtistFavorite = (TextView) itemView.findViewById(R.id.nameArtistFavorite);
-            imagenFavorite = (ImageView) itemView.findViewById(R.id.imagenFavoritoArtist);
+            imagenFavorite = (ImageView) itemView.findViewById(R.id.favoriteArtist);
 
         }
 
