@@ -55,7 +55,7 @@ public class FavoritesFragment extends Fragment {
             super(fragmentManager);
         }
 
-        String [] tituloTabs = {"ARTIST","EVENTS","SONGS"};
+        String [] tituloTabs = {"ARTIST","EVENTS"};
 
         @Override
         public Fragment getItem(int i) {

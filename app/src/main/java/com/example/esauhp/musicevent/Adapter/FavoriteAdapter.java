@@ -16,47 +16,40 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 //RecyclerView.Adapter<AlbumAdapter.ViewHolder>
 
-public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.ViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder>{
     private Context context;
     private List<Artist> artistList;
-    private OnButtonClickedListener listener;
+    private FavoriteAdapter.OnButtonClickedListener listener;
 
-    public TopArtistAdapter(Context context, List<Artist> objects) {
-        this.context=context;
-        this.artistList = objects;
-    }
-    public TopArtistAdapter(Context context, List<Artist> objects, OnButtonClickedListener listener) {
+    public FavoriteAdapter(Context context, List<Artist> objects, OnButtonClickedListener listener) {
         this.context=context;
         this.artistList = objects;
         this.listener=listener;
     }
 
-
     @NonNull
     @Override
-    public TopArtistAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.artist_list, viewGroup, false);
-        TopArtistAdapter.ViewHolder viewHolder = new TopArtistAdapter.ViewHolder(view);
+    public FavoriteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.artist_favorite_list, viewGroup, false);
+        FavoriteAdapter.ViewHolder viewHolder = new FavoriteAdapter.ViewHolder(view);
         return viewHolder;
     }
 
 
 
     @Override
-    public void onBindViewHolder(@NonNull TopArtistAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull FavoriteAdapter.ViewHolder viewHolder, int i) {
         final Artist artist = artistList.get(i);
-        viewHolder.orden.setText(i+1+"");
-        viewHolder.nameArtist.setText(artist.getNombreArtista());
+        viewHolder.nameArtistFavorite.setText(artist.getNombreArtista());
         Picasso.get().load(artist.getUrlImage()).into(viewHolder.imageArtist);
-        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
-        viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
+        //viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
+        /*viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onButtonClicked(v,artist);
-
+                Toast.makeText(context, "El artista ha sido añadido a favorito", Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
     }
 
 
@@ -74,17 +67,15 @@ public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView orden;
         public ImageView imageArtist;
-        public TextView nameArtist;
+        public TextView nameArtistFavorite;
         public ImageView imagenFavorite;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            orden = (TextView) itemView.findViewById(R.id.ordenArtist);
-            imageArtist = (ImageView) itemView.findViewById(R.id.imagenArtist);
-            nameArtist = (TextView) itemView.findViewById(R.id.artistNameArtist);
+            imageArtist = (ImageView) itemView.findViewById(R.id.imageArtistFavorite);
+            nameArtistFavorite = (TextView) itemView.findViewById(R.id.nameArtistFavorite);
             imagenFavorite = (ImageView) itemView.findViewById(R.id.imagenFavoritoArtist);
 
         }

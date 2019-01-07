@@ -1,14 +1,41 @@
 package com.example.esauhp.musicevent;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
+@Entity
 public class Artist implements Serializable {
+    @NonNull
     private String nombreArtista;
+    @NonNull
     private int orden;
+    @NonNull
     private String urlImage;
+    @NonNull
     private boolean favorite;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
+
     public Artist() {
+    }
+
+    public Artist(String urlImage,String nombreArtista, long id) {
+        this.urlImage=urlImage;
+        this.nombreArtista=nombreArtista;
+        this.id=id;
     }
 
     public boolean isFavorite() {

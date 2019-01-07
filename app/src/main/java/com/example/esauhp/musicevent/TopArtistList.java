@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.esauhp.musicevent.Adapter.TopArtistAdapter;
 import com.example.esauhp.musicevent.ViewModel.ViewModelArtist;
@@ -50,7 +51,21 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
         recyclerView = view.findViewById(R.id.recyclerArtist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new TopArtistAdapter(getContext(),listaArtist);
+        //adapter = new TopArtistAdapter(getContext(),listaArtist);
+        adapter = new TopArtistAdapter(getContext(), listaArtist, new TopArtistAdapter.OnButtonClickedListener() {
+            @Override
+            public void onButtonClicked(View v, Artist artist) {
+                if(v.getId()==R.id.imagenFavoritoArtist){
+                    if(artist.isFavorite()){
+                        Toast.makeText(getContext(), "El artista ya se encuentra en favoritos", Toast.LENGTH_SHORT).show();
+                    }else{
+                        viewModelArtist.addArtist(artist);
+                        Toast.makeText(getContext(), "El artista ha sido añadido a favorito", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         return view;
@@ -74,7 +89,7 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
                         listaArtist.addAll(artist);
                         adapter.notifyDataSetChanged();
                     }else{
-                        mensaje.setText("No se ha encontrado ningún álbum");
+                        mensaje.setText("No se ha encontrado ningún artista");
                     }
                 }
 

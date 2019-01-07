@@ -46,7 +46,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "El álbum ha sido añadida a favoritos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "La canción ha sido añadida a favoritos", Toast.LENGTH_SHORT).show();
 
             }
         });

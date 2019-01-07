@@ -74,7 +74,7 @@ public class TopSongList extends Fragment implements SongAdapter.OnButtonClicked
                         listaSong.addAll(songs);
                         adapter.notifyDataSetChanged();
                     }else{
-                        mensaje.setText("No se ha encontrado ningún álbum");
+                        mensaje.setText("No se ha encontrado ninguna canción");
                     }
                 }
 
