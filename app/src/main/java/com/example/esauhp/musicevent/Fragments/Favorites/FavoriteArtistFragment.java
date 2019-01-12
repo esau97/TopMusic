@@ -92,6 +92,7 @@ public class FavoriteArtistFragment extends Fragment implements FavoriteAdapter.
 
 
         }
+        artist.setFavorite(false);
         viewModelArtist.deleteArtist(artist);
 
 

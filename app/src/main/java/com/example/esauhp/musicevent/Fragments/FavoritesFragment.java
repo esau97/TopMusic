@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.esauhp.musicevent.Fragments.Favorites.FavoriteArtistFragment;
-import com.example.esauhp.musicevent.Fragments.Favorites.FavoriteEventFragment;
 import com.example.esauhp.musicevent.R;
 
 
@@ -62,15 +61,13 @@ public class FavoritesFragment extends Fragment {
             switch (i){
                 case 0:
                     return new FavoriteArtistFragment();
-                case 1:
-                    return new FavoriteEventFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 1;
         }
 
         @Nullable

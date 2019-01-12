@@ -3,7 +3,6 @@ package com.example.esauhp.musicevent;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -12,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +34,7 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
     private ViewModelArtist viewModelArtist;
     private TopArtistAdapter adapter;
     RecyclerView listaFavs;
+    private String pais;
 
     public TopArtistList() {
     }
@@ -46,7 +47,7 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_top_artist_list, container, false);
-
+        pais="vacio";
         listaArtist = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerArtist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -54,20 +55,17 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
         //adapter = new TopArtistAdapter(getContext(),listaArtist);
         adapter = new TopArtistAdapter(getContext(), listaArtist, this);
         recyclerView.setAdapter(adapter);
-
+        mostrarDatos();
         return view;
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-
+    public void mostrarDatos(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= connectivityManager.getActiveNetworkInfo();
         boolean conectar= networkInfo!=null && networkInfo.isConnected();
         if(conectar){
             viewModelArtist = ViewModelProviders.of(this).get(ViewModelArtist.class);
-
-            viewModelArtist.getArtist().observe(this, new Observer<List<Artist>>() {
+            Log.i("Metodo mostrar datos",pais);
+            viewModelArtist.getArtist(pais).observe(this, new Observer<List<Artist>>() {
                 @Override
                 public void onChanged(@Nullable List<Artist> artist) {
                     listaArtist.clear();
@@ -83,10 +81,7 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+
 
 
     @Override
@@ -94,8 +89,9 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
         if(artist.isFavorite()){
             ImageView imageView = v.findViewById(R.id.imagenFavoritoArtist);
             imageView.setImageResource(R.drawable.ic_star_border_black_24dp);
-            viewModelArtist.deleteArtist(artist);
             artist.setFavorite(false);
+            viewModelArtist.deleteArtist(artist);
+
         }else {
             viewModelArtist.addArtist(artist);
             ImageView imageView = v.findViewById(R.id.imagenFavoritoArtist);
@@ -106,5 +102,11 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
 
     public interface OnFragmentInteractionListener{
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void setTextFiltrar(String text){
+        pais=text;
+        Log.i("Metodo coger pais",pais);
+        mostrarDatos();
     }
 }

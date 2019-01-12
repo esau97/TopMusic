@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.esauhp.musicevent.Artist;
 import com.example.esauhp.musicevent.DataBaseRoom.DataBaseRoom;
 import com.example.esauhp.musicevent.QueryUtils;
+import com.example.esauhp.musicevent.R;
 
 import java.util.List;
 
@@ -27,17 +28,22 @@ public class ViewModelArtist extends AndroidViewModel {
     private Application application;
     private String apiKey = "ee5a521b423f66ab12730b69b24cbcfb";
     private String URL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=disco&api_key="+apiKey+"&limit=10&format=json";
+    private String URL2 ;
     DataBaseRoom dbRoom;
+    private String texto;
 
     public ViewModelArtist(Application application) {
         super(application);
+        this.texto="vacio";
         this.application = application;
         dbRoom = DataBaseRoom.getInstance(application);
         listaArtistaFavoritos = dbRoom.artistDAO().getArtist();
     }
 
-    public LiveData<List<Artist>> getArtist(){
-        if(listaArtist==null){
+    public LiveData<List<Artist>> getArtist(String texto){
+
+        if(listaArtist==null || !this.texto.equals(texto)){
+            this.texto=texto;
             listaArtist=new MutableLiveData<>();
             loadArtist();
         }
@@ -46,8 +52,14 @@ public class ViewModelArtist extends AndroidViewModel {
     }
 
     private void loadArtist(){
+        Uri baseUri;
+        if(texto.equals("vacio")){
+            baseUri= Uri.parse(URL);
+        }else{
+            URL2="http://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country="+texto+"&api_key="+application.getString(R.string.apiKey)+"&limit=10&format=json";
+            baseUri = Uri.parse(URL2);
+        }
 
-        Uri baseUri = Uri.parse(URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         final RequestQueue requestQueue= Volley.newRequestQueue(application);
         StringRequest request=new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
