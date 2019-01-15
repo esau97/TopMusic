@@ -58,6 +58,7 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
         mostrarDatos();
         return view;
     }
+
     public void mostrarDatos(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= connectivityManager.getActiveNetworkInfo();

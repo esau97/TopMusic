@@ -14,15 +14,14 @@ import android.widget.Toast;
 public class TopArtistFiltrar extends Fragment  {
 
     OnNameSent callback;
-    private boolean toggle;
 
-    public static String api="ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=disco&api_key=ee5a521b423f66ab12730b69b24cbcfb&limit=10&format=json";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_top_artist_filtrar, container, false);
-        api="ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=disco&api_key="+getString(R.string.apiKey)+"&limit=10&format=json";
+
 
         final EditText editText = view.findViewById(R.id.editTextFiltrarArtist);
 

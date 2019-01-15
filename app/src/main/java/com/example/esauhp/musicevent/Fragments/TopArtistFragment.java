@@ -18,7 +18,7 @@ public class TopArtistFragment extends Fragment implements TopArtistFiltrar.OnNa
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_artist,container,false);
-
+        
         return view;
     }
 
@@ -28,7 +28,7 @@ public class TopArtistFragment extends Fragment implements TopArtistFiltrar.OnNa
         if(topArtistList!=null){
             topArtistList.setTextFiltrar(text);
         }
-        int num=2;
+
     }
 }
 

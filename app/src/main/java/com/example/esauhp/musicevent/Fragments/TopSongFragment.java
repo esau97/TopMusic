@@ -9,12 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.esauhp.musicevent.R;
+import com.example.esauhp.musicevent.TopSongFiltrar;
+import com.example.esauhp.musicevent.TopSongList;
 
 
-public class TopSongFragment extends Fragment {
+public class TopSongFragment extends Fragment implements TopSongFiltrar.OnNameSent {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_top_song,container,false);
+        View view = inflater.inflate(R.layout.fragment_top_song,container,false);
+        return view;
+    }
+
+    @Override
+    public void onChange(String text) {
+        TopSongList topSongList = (TopSongList) getChildFragmentManager().findFragmentById(R.id.fragment6);
+        if(topSongList!=null){
+            topSongList.setTextFiltrar(text);
+        }
+
     }
 }

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.esauhp.musicevent.Album;
 import com.example.esauhp.musicevent.R;
@@ -42,14 +41,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
         viewHolder.songNameSong.setText(song.getSongName());
         Picasso.get().load(song.getUrlImage()).into(viewHolder.imageSong);
 
-        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_black_24dp);
-        viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "La canción ha sido añadida a favoritos", Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 
 
@@ -71,7 +62,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
         public ImageView imageSong;
         public TextView songNameSong;
         public TextView artistNameSong;
-        public ImageView imagenFavorite;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,7 +70,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
             imageSong = (ImageView) itemView.findViewById(R.id.imagenSong);
             songNameSong = (TextView) itemView.findViewById(R.id.songNameSong);
             artistNameSong = (TextView) itemView.findViewById(R.id.artistNameSong);
-            imagenFavorite = (ImageView) itemView.findViewById(R.id.imagenFavoritoSong);
 
         }
 

@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.esauhp.musicevent.Album;
 import com.example.esauhp.musicevent.QueryUtils;
+import com.example.esauhp.musicevent.R;
 
 import java.util.List;
 
@@ -23,14 +24,20 @@ public class ViewModelAlbum extends AndroidViewModel {
     private Application application;
     private String apiKey = "ee5a521b423f66ab12730b69b24cbcfb";
     private String URL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&tag=disco&api_key="+apiKey+"&limit=10&format=json";
+    private String URL2 ;
+    private String texto;
 
     public ViewModelAlbum(Application application) {
         super(application);
+        this.texto="vacio";
         this.application = application;
     }
 
-    public LiveData<List<Album>> getAlbum(){
-        if(listaAlbum==null){
+    public LiveData<List<Album>> getAlbum(String texto){
+
+        if(listaAlbum==null || !this.texto.equals(texto)){
+            this.texto=texto;
+            int num =4;
             listaAlbum=new MutableLiveData<>();
             loadAlbums();
         }
@@ -39,14 +46,22 @@ public class ViewModelAlbum extends AndroidViewModel {
     }
 
     private void loadAlbums(){
+        Log.i("Metodo mostrar datos",this.texto);
+        Uri baseUri;
+        if(texto.equals("vacio")){
+            baseUri= Uri.parse(URL);
+        }else{
 
-        Uri baseUri = Uri.parse(URL);
+            URL2="http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist="+texto+"&api_key="+application.getString(R.string.apiKey)+"&limit=10&format=json";
+            baseUri = Uri.parse(URL2);
+        }
+
         Uri.Builder uriBuilder = baseUri.buildUpon();
         final RequestQueue requestQueue= Volley.newRequestQueue(application);
         StringRequest request=new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                List<Album>lista=QueryUtils.extraerAlbums(response);
+                List<Album>lista=QueryUtils.extraerAlbums(response,texto);
                 listaAlbum.setValue(lista);
             }
         }, new Response.ErrorListener() {

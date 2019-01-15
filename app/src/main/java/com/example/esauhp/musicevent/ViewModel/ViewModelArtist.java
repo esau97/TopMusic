@@ -26,8 +26,8 @@ public class ViewModelArtist extends AndroidViewModel {
     private static MutableLiveData<List<Artist>> listaArtist;
     private static LiveData<List<Artist>> listaArtistaFavoritos;
     private Application application;
-    private String apiKey = "ee5a521b423f66ab12730b69b24cbcfb";
-    private String URL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=disco&api_key="+apiKey+"&limit=10&format=json";
+    private String apiKey = getApplication().getString(R.string.apiKey);
+    private String URL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=disco&api_key="+getApplication().getString(R.string.apiKey)+"&limit=10&format=json";
     private String URL2 ;
     DataBaseRoom dbRoom;
     private String texto;

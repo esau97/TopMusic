@@ -12,35 +12,68 @@ import java.util.List;
 public class QueryUtils {
     public QueryUtils(){}
 
-    public static List<Album> extraerAlbums(String result){
+    public static List<Album> extraerAlbums(String result,String artista){
         List<Album> listaAlbums = new ArrayList<>();
-        try{
-            JSONObject root = new JSONObject(result);
-            JSONObject albums = root.getJSONObject("albums");
-            JSONArray arrayAlbum = albums.getJSONArray("album");
+        Log.i("Metodo mostrar datos",artista);
+        if(artista.equals("vacio")){
+            try{
+                JSONObject root = new JSONObject(result);
+                JSONObject albums = root.getJSONObject("albums");
+                JSONArray arrayAlbum = albums.getJSONArray("album");
 
-            for (int i = 0; i < arrayAlbum.length(); i++) {
+                for (int i = 0; i < arrayAlbum.length(); i++) {
 
-                JSONObject al = arrayAlbum.getJSONObject(i);
+                    JSONObject al = arrayAlbum.getJSONObject(i);
 
-                Album album = new Album();
-                album.setFavorite(false);
-                album.setNombreAlbum(al.getString("name"));
-                JSONObject art = al.getJSONObject("artist");
-                album.setNombreArtista(art.getString("name"));
-                JSONArray photo = al.getJSONArray("image");
-                JSONObject p = photo.getJSONObject(1);
-                album.setUrlImage(p.getString("#text"));
-                listaAlbums.add(album);
+                    Album album = new Album();
+                    album.setFavorite(false);
+                    album.setNombreAlbum(al.getString("name"));
+                    JSONObject art = al.getJSONObject("artist");
+                    album.setNombreArtista(art.getString("name"));
+                    JSONArray photo = al.getJSONArray("image");
+                    JSONObject p = photo.getJSONObject(1);
+                    album.setUrlImage(p.getString("#text"));
+                    listaAlbums.add(album);
 
+                }
+                for (int i = 0; i < listaAlbums.size(); i++) {
+                    Log.i("Prueba",listaAlbums.get(i).getNombreAlbum().toString());
+                }
+                int num =4;
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            for (int i = 0; i < listaAlbums.size(); i++) {
-                Log.i("Prueba",listaAlbums.get(i).getNombreAlbum().toString());
-            }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }else {
+            try{
+                JSONObject root = new JSONObject(result);
+                JSONObject albums = root.getJSONObject("topalbums");
+                JSONArray arrayAlbum = albums.getJSONArray("album");
+
+                for (int i = 0; i < arrayAlbum.length(); i++) {
+
+                    JSONObject al = arrayAlbum.getJSONObject(i);
+
+                    Album album = new Album();
+                    album.setFavorite(false);
+                    album.setNombreAlbum(al.getString("name"));
+                    JSONObject art = al.getJSONObject("artist");
+                    album.setNombreArtista(art.getString("name"));
+                    JSONArray photo = al.getJSONArray("image");
+                    JSONObject p = photo.getJSONObject(1);
+                    album.setUrlImage(p.getString("#text"));
+                    listaAlbums.add(album);
+
+                }
+                for (int i = 0; i < listaAlbums.size(); i++) {
+                    Log.i("Prueba",listaAlbums.get(i).getNombreAlbum().toString());
+                }
+                int num=4;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+
         return listaAlbums;
     }
 

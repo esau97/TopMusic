@@ -12,10 +12,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.esauhp.musicevent.Adapter.SongAdapter;
@@ -26,13 +26,14 @@ import java.util.List;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
-public class TopSongList extends Fragment implements SongAdapter.OnButtonClickedListener{
+public class TopSongList extends Fragment {
 
     private List<Song> listaSong;
     RecyclerView recyclerView;
     TextView mensaje;
     private ViewModelSong viewModelSong;
     private SongAdapter adapter;
+    private String pais;
 
     Activity activity;
 
@@ -44,29 +45,26 @@ public class TopSongList extends Fragment implements SongAdapter.OnButtonClicked
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_top_song_list, container, false);
-
+        pais="vacio";
         listaSong = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerSong);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         adapter = new SongAdapter(getContext(),listaSong);
         recyclerView.setAdapter(adapter);
-
+        mostrarDatos();
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-
+    public void mostrarDatos() {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= connectivityManager.getActiveNetworkInfo();
         boolean conectar= networkInfo!=null && networkInfo.isConnected();
         if(conectar){
             viewModelSong = ViewModelProviders.of(this).get(ViewModelSong.class);
-            viewModelSong.getSong().observe(this, new Observer<List<Song>>() {
+            viewModelSong.getSong(pais).observe(this, new Observer<List<Song>>() {
                 @Override
                 public void onChanged(@Nullable List<Song> songs) {
                     listaSong.clear();
@@ -87,23 +85,16 @@ public class TopSongList extends Fragment implements SongAdapter.OnButtonClicked
         super.onAttach(context);
     }
 
-    @Override
-    public void onButtonClicked(View v, Album album) {
-        if(album.isFavorite()){
-            ImageView imageView = v.findViewById(R.id.imagenFavoritoAlbum);
-            imageView.setImageResource(R.drawable.ic_star_border_white_24dp);
-            album.setFavorite(false);
-        }else {
-            ImageView imageView = v.findViewById(R.id.imagenFavoritoAlbum);
-            imageView.setImageResource(R.drawable.ic_star_white_24dp);
-            album.setFavorite(true);
-        }
-    }
+
 
     public interface OnFragmentInteractionListener{
         void onFragmentInteraction(Uri uri);
     }
-
+    public void setTextFiltrar(String text){
+        pais=text;
+        Log.i("Metodo coger pais",pais);
+        mostrarDatos();
+    }
 
 
 }

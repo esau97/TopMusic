@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.esauhp.musicevent.Album;
 import com.example.esauhp.musicevent.R;
@@ -41,14 +40,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         viewHolder.nameAlbum.setText(album.getNombreAlbum());
         Picasso.get().load(album.getUrlImage()).into(viewHolder.imageAlbum);
 
-        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_black_24dp);
-        viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "El álbum ha sido añadido a favoritos", Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 
 
@@ -70,7 +61,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         public ImageView imageAlbum;
         public TextView nameAlbum;
         public TextView nameArtist;
-        public ImageView imagenFavorite;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,12 +70,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
             imageAlbum = (ImageView) itemView.findViewById(R.id.imagenAlbum);
             nameAlbum = (TextView) itemView.findViewById(R.id.albumNameAlbum);
             nameArtist = (TextView) itemView.findViewById(R.id.artistNameAlbum);
-            imagenFavorite = (ImageView) itemView.findViewById(R.id.imagenFavoritoAlbum);
+
 
         }
 
     }
-    public interface OnButtonClickedListener{
-        void onButtonClicked(View v, Album album);
-    }
+
 }

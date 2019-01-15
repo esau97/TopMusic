@@ -11,6 +11,8 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:singleLine="true"
+            android:maxLines="1"
             android:layout_marginStart="8dp"
             android:id="@+id/editTextFiltrarArtist"
             android:layout_width="0dp"
