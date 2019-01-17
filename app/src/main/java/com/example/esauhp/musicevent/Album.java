@@ -8,6 +8,15 @@ public class Album implements Serializable {
     private int orden;
     private String urlImage;
     private boolean favorite;
+    private String Url;
+
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String url) {
+        Url = url;
+    }
     public Album(){
 
     }

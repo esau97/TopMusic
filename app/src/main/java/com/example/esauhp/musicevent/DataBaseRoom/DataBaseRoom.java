@@ -17,7 +17,7 @@ public abstract class DataBaseRoom extends RoomDatabase {
 
     public static DataBaseRoom getInstance(final Context context){
         if(INSTANCE==null){
-            INSTANCE= Room.databaseBuilder(context.getApplicationContext(), DataBaseRoom.class, "artistasFavoritos.db").fallbackToDestructiveMigration().build();
+            INSTANCE= Room.databaseBuilder(context.getApplicationContext(), DataBaseRoom.class, "artistasFavs.db").fallbackToDestructiveMigration().build();
         }
         return INSTANCE;
     }

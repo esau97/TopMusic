@@ -7,6 +7,15 @@ public class Song implements Serializable {
     private String songName;
     private String artistName;
     private boolean favorite;
+    private String Url;
+
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String url) {
+        Url = url;
+    }
 
     public boolean isFavorite() {
         return favorite;

@@ -3,10 +3,12 @@ package com.example.esauhp.musicevent.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.esauhp.musicevent.Album;
@@ -19,10 +21,16 @@ import java.util.List;
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
     private Context context;
     private List<Song> songList;
+    private OnButtonClickedListener listener;
 
     public SongAdapter(Context context, List<Song> objects) {
         this.context=context;
         this.songList = objects;
+    }
+    public SongAdapter(Context context, List<Song> objects, OnButtonClickedListener listener) {
+        this.context=context;
+        this.songList = objects;
+        this.listener=listener;
     }
 
     @NonNull
@@ -39,6 +47,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
         viewHolder.orden.setText(i+1+"");
         viewHolder.artistNameSong.setText(song.getArtistName());
         viewHolder.songNameSong.setText(song.getSongName());
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onButtonClicked(v,song);
+            }
+        });
         Picasso.get().load(song.getUrlImage()).into(viewHolder.imageSong);
 
     }
@@ -62,10 +76,11 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
         public ImageView imageSong;
         public TextView songNameSong;
         public TextView artistNameSong;
+        public LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            linearLayout = itemView.findViewById(R.id.song_list);
             orden = (TextView) itemView.findViewById(R.id.ordenSong);
             imageSong = (ImageView) itemView.findViewById(R.id.imagenSong);
             songNameSong = (TextView) itemView.findViewById(R.id.songNameSong);
@@ -75,6 +90,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
 
     }
     public interface OnButtonClickedListener{
-        void onButtonClicked(View v, Album album);
+        void onButtonClicked(View v, Song song);
     }
 }

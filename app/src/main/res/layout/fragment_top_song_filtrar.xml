@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:hint="Filtrado"
+            android:hint="Search by countries (Empty by global search)"
+            android:textColorHint="#555555"
             android:textColor="#FFF"/>
         <ImageButton
             android:layout_marginRight="8dp"

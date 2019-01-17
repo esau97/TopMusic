@@ -1,11 +1,13 @@
 package com.example.esauhp.musicevent;
 
-import android.app.Activity;
+
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +27,7 @@ import java.util.List;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
-public class TopAlbumsList extends Fragment {
+public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClickedListener{
 
 
     private List<Album> listaAlbum;
@@ -34,7 +36,6 @@ public class TopAlbumsList extends Fragment {
     private ViewModelAlbum viewModelAlbum;
     private AlbumAdapter adapter;
     private String artista;
-    Activity activity;
 
     public TopAlbumsList() {
     }
@@ -49,7 +50,7 @@ public class TopAlbumsList extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerAlbums);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new AlbumAdapter(getContext(),listaAlbum);
+        adapter = new AlbumAdapter(getContext(),listaAlbum,this);
         recyclerView.setAdapter(adapter);
         mostrarDatos();
         return view;
@@ -92,4 +93,13 @@ public class TopAlbumsList extends Fragment {
     }
 
 
+    @Override
+    public void onButtonClicked(View v, Album album) {
+        if(v.getId()==R.id.album_list){
+            Intent intent=new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(album.getUrl()));
+            Log.i("Mostrar",album.getUrl());
+            startActivity(intent);
+        }
+    }
 }

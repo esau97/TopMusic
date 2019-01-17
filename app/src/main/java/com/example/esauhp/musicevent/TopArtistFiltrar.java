@@ -54,6 +54,7 @@ public class TopArtistFiltrar extends Fragment  {
 
         try {
             callback = (OnNameSent) getParentFragment();
+            int num=4;
         }catch (ClassCastException e){
             throw new ClassCastException(context.toString()+ " Debería implementar el interfaz OnNameSent");
         }

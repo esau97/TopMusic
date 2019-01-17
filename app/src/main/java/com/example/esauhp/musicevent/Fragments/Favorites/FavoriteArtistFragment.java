@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.esauhp.musicevent.Adapter.FavoriteAdapter;
@@ -88,18 +89,17 @@ public class FavoriteArtistFragment extends Fragment implements FavoriteAdapter.
 
     @Override
     public void onButtonClicked(View v, Artist artist) {
-        if(artist.isFavorite()){
+        ImageView imageView = v.findViewById(R.id.favoriteArtist);
+        if(v.getId()==(R.id.favoriteArtist)){
+            if(artist.isFavorite()){
+                imageView.setImageResource(R.drawable.ic_star_border_black_24dp);
+                artist.setFavorite(false);
+                viewModelArtist.deleteArtist(artist);
+                artist.setFavorite(false);
 
-
+            }
         }
-        artist.setFavorite(false);
-        viewModelArtist.deleteArtist(artist);
-
-
     }
 
-    public interface OnFragmentInteractionListener{
-        void onFragmentInteraction(Uri uri);
-    }
 
 }

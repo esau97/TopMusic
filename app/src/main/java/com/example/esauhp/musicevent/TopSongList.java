@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.esauhp.musicevent.Adapter.AlbumAdapter;
 import com.example.esauhp.musicevent.Adapter.SongAdapter;
 import com.example.esauhp.musicevent.ViewModel.ViewModelSong;
 
@@ -26,7 +28,7 @@ import java.util.List;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
-public class TopSongList extends Fragment {
+public class TopSongList extends Fragment implements SongAdapter.OnButtonClickedListener{
 
     private List<Song> listaSong;
     RecyclerView recyclerView;
@@ -50,7 +52,7 @@ public class TopSongList extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerSong);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new SongAdapter(getContext(),listaSong);
+        adapter = new SongAdapter(getContext(),listaSong, this);
         recyclerView.setAdapter(adapter);
         mostrarDatos();
         return view;
@@ -85,11 +87,17 @@ public class TopSongList extends Fragment {
         super.onAttach(context);
     }
 
-
-
-    public interface OnFragmentInteractionListener{
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onButtonClicked(View v, Song song) {
+        if(v.getId()==R.id.song_list){
+            Intent intent=new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(song.getUrl()));
+            Log.i("Mostrar",song.getUrl());
+            startActivity(intent);
+        }
     }
+
+
     public void setTextFiltrar(String text){
         pais=text;
         Log.i("Metodo coger pais",pais);

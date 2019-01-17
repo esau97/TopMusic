@@ -18,13 +18,10 @@ public interface ArtistDAO {
 
 
 
-    @Query("SELECT * FROM artist WHERE id=:id")
-    public Artist getArtist(long id);
+    @Query("SELECT * FROM artist WHERE nombreArtista=:name")
+    public Artist getArtistFav(String name);
 
     @Query("SELECT * FROM artist")
-    //public LiveData<Artist> getProducts();
-
-
     public LiveData<List<Artist >> getArtist(); //LiveData - Observe para cuando cambien automaticamente los datos se realice el cambio
 
 }

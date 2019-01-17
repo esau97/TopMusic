@@ -3,13 +3,16 @@ package com.example.esauhp.musicevent.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.esauhp.musicevent.Album;
+import com.example.esauhp.musicevent.Artist;
 import com.example.esauhp.musicevent.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,10 +21,16 @@ import java.util.List;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
     private Context context;
     private List<Album> albumList;
+    private OnButtonClickedListener listener;
 
     public AlbumAdapter(Context context, List<Album> objects) {
         this.context=context;
         this.albumList = objects;
+    }
+    public AlbumAdapter(Context context, List<Album> objects, OnButtonClickedListener listener) {
+        this.context=context;
+        this.albumList = objects;
+        this.listener=listener;
     }
 
     @NonNull
@@ -38,6 +47,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         viewHolder.orden.setText(i+1+"");
         viewHolder.nameArtist.setText(album.getNombreArtista());
         viewHolder.nameAlbum.setText(album.getNombreAlbum());
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Mostrar",album.getUrl());
+                listener.onButtonClicked(v,album);
+            }
+        });
         Picasso.get().load(album.getUrlImage()).into(viewHolder.imageAlbum);
 
     }
@@ -61,11 +77,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         public ImageView imageAlbum;
         public TextView nameAlbum;
         public TextView nameArtist;
-
+        public LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            linearLayout = itemView.findViewById(R.id.album_list);
             orden = (TextView) itemView.findViewById(R.id.ordenAlbum);
             imageAlbum = (ImageView) itemView.findViewById(R.id.imagenAlbum);
             nameAlbum = (TextView) itemView.findViewById(R.id.albumNameAlbum);
@@ -74,6 +91,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
 
         }
 
+    }
+    public interface OnButtonClickedListener{
+        void onButtonClicked(View v, Album album);
     }
 
 }

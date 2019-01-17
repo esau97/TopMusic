@@ -28,6 +28,15 @@ public class Artist implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
 
+    private String Url;
+
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String url) {
+        Url = url;
+    }
 
     public Artist() {
     }
@@ -36,6 +45,13 @@ public class Artist implements Serializable {
         this.urlImage=urlImage;
         this.nombreArtista=nombreArtista;
         this.id=id;
+    }
+    public Artist(String urlImage,String nombreArtista,String url, boolean favorite) {
+        this.urlImage=urlImage;
+        this.nombreArtista=nombreArtista;
+        this.id=id;
+        this.favorite=favorite;
+        this.Url=url;
     }
 
     public boolean isFavorite() {

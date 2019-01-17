@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.esauhp.musicevent.Artist;
@@ -49,7 +50,17 @@ public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.View
         viewHolder.nameArtist.setText(artist.getNombreArtista());
         Picasso.get().load(artist.getUrlImage()).into(viewHolder.imageArtist);
 
-        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_black_24dp);
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onButtonClicked(v,artist);
+            }
+        });
+        if(artist.isFavorite()){
+            viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_black_24dp);
+        }else {
+            viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_black_24dp);
+        }
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,10 +90,12 @@ public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.View
         public ImageView imageArtist;
         public TextView nameArtist;
         public ImageView imagenFavorite;
+        public LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            linearLayout = itemView.findViewById(R.id.artist_list);
             orden = (TextView) itemView.findViewById(R.id.ordenArtist);
             imageArtist = (ImageView) itemView.findViewById(R.id.imagenArtist);
             nameArtist = (TextView) itemView.findViewById(R.id.artistNameArtist);

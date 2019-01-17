@@ -10,6 +10,7 @@
         android:layout_height="wrap_content">
 
         <EditText
+
             android:singleLine="true"
             android:maxLines="1"
             android:layout_width="0dp"
@@ -17,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/editTextFiltrarAlbums"
-            android:hint="Filtrado"
-            android:focusedByDefault="false"
+            android:hint="Search by artist (Empty by global search)"
+            android:textColorHint="#555555"
             android:textColor="#FFF"/>
         <ImageButton
             android:id="@+id/imageBuscarAlbum"

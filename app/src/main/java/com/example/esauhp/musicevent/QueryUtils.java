@@ -1,6 +1,10 @@
 package com.example.esauhp.musicevent;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.esauhp.musicevent.DataBaseRoom.DataBaseRoom;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,8 +12,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class QueryUtils {
+    public static DataBaseRoom dbr;
+    public static Context context;
     public QueryUtils(){}
 
     public static List<Album> extraerAlbums(String result,String artista){
@@ -28,6 +35,7 @@ public class QueryUtils {
                     Album album = new Album();
                     album.setFavorite(false);
                     album.setNombreAlbum(al.getString("name"));
+                    album.setUrl(al.getString("url"));
                     JSONObject art = al.getJSONObject("artist");
                     album.setNombreArtista(art.getString("name"));
                     JSONArray photo = al.getJSONArray("image");
@@ -39,7 +47,7 @@ public class QueryUtils {
                 for (int i = 0; i < listaAlbums.size(); i++) {
                     Log.i("Prueba",listaAlbums.get(i).getNombreAlbum().toString());
                 }
-                int num =4;
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -57,6 +65,7 @@ public class QueryUtils {
                     Album album = new Album();
                     album.setFavorite(false);
                     album.setNombreAlbum(al.getString("name"));
+                    album.setUrl(al.getString("url"));
                     JSONObject art = al.getJSONObject("artist");
                     album.setNombreArtista(art.getString("name"));
                     JSONArray photo = al.getJSONArray("image");
@@ -68,7 +77,7 @@ public class QueryUtils {
                 for (int i = 0; i < listaAlbums.size(); i++) {
                     Log.i("Prueba",listaAlbums.get(i).getNombreAlbum().toString());
                 }
-                int num=4;
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -78,7 +87,11 @@ public class QueryUtils {
     }
 
     public static List<Artist> extraerArtist(String result){
+        dbr= DataBaseRoom.getInstance(context);
         List<Artist> listaArtist = new ArrayList<>();
+        String name, url, image;
+
+
         try{
             JSONObject root = new JSONObject(result);
             JSONObject artist = root.getJSONObject("topartists");
@@ -87,26 +100,29 @@ public class QueryUtils {
             for (int i = 0; i < arrayArtist.length(); i++) {
 
                 JSONObject al = arrayArtist.getJSONObject(i);
-
-                Artist artista = new Artist();
-                artista.setFavorite(false);
-                artista.setNombreArtista(al.getString("name"));
-
+                name =(al.getString("name"));
+                url =(al.getString("url"));
                 JSONArray photo = al.getJSONArray("image");
                 JSONObject p = photo.getJSONObject(1);
-                artista.setUrlImage(p.getString("#text"));
-                listaArtist.add(artista);
-
-            }
-            for (int i = 0; i < listaArtist.size(); i++) {
-                Log.i("Prueba",listaArtist.get(i).getNombreArtista().toString());
+                image =(p.getString("#text"));
+                Artist artista = new ComprobarFav().execute(name).get();
+                if(artista==null){
+                    listaArtist.add(new Artist(image,name,url,false));
+                }else {
+                    listaArtist.add(artista);
+                }
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
         return listaArtist;
     }
+
     public static List<Song> extraerSongs(String result){
         List<Song> listaSong = new ArrayList<>();
         try{
@@ -117,10 +133,10 @@ public class QueryUtils {
             for (int i = 0; i < arrayArtist.length(); i++) {
 
                 JSONObject al = arrayArtist.getJSONObject(i);
-
                 Song song = new Song();
                 song.setFavorite(false);
                 song.setSongName(al.getString("name"));
+                song.setUrl(al.getString("url"));
                 JSONObject nameArtist = al.getJSONObject("artist");
                 song.setArtistName(nameArtist.getString("name"));
                 JSONArray photo = al.getJSONArray("image");
@@ -137,6 +153,14 @@ public class QueryUtils {
             e.printStackTrace();
         }
         return listaSong;
+    }
+
+    private static class ComprobarFav extends AsyncTask<String,Void, Artist> {
+        @Override
+        protected Artist doInBackground(String... strings) {
+            Artist artist = dbr.artistDAO().getArtistFav(strings[0]);
+            return artist;
+        }
     }
 
 }

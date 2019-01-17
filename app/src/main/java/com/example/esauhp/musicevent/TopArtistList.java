@@ -3,6 +3,7 @@ package com.example.esauhp.musicevent;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -65,7 +66,6 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
         boolean conectar= networkInfo!=null && networkInfo.isConnected();
         if(conectar){
             viewModelArtist = ViewModelProviders.of(this).get(ViewModelArtist.class);
-            Log.i("Metodo mostrar datos",pais);
             viewModelArtist.getArtist(pais).observe(this, new Observer<List<Artist>>() {
                 @Override
                 public void onChanged(@Nullable List<Artist> artist) {
@@ -87,27 +87,31 @@ public class TopArtistList extends Fragment implements TopArtistAdapter.OnButton
 
     @Override
     public void onButtonClicked(View v, Artist artist) {
-        if(artist.isFavorite()){
-            ImageView imageView = v.findViewById(R.id.imagenFavoritoArtist);
-            imageView.setImageResource(R.drawable.ic_star_border_black_24dp);
-            artist.setFavorite(false);
-            viewModelArtist.deleteArtist(artist);
+        if(v.getId()==R.id.imagenFavoritoArtist){
+            if(artist.isFavorite()){
+                ImageView imageView = v.findViewById(R.id.imagenFavoritoArtist);
+                imageView.setImageResource(R.drawable.ic_star_border_black_24dp);
+                artist.setFavorite(false);
+                viewModelArtist.deleteArtist(artist);
 
-        }else {
-            viewModelArtist.addArtist(artist);
-            ImageView imageView = v.findViewById(R.id.imagenFavoritoArtist);
-            imageView.setImageResource(R.drawable.ic_star_black_24dp);
-            artist.setFavorite(true);
+            }else {
+                artist.setFavorite(true);
+                ImageView imageView = v.findViewById(R.id.imagenFavoritoArtist);
+                imageView.setImageResource(R.drawable.ic_star_black_24dp);
+                viewModelArtist.addArtist(artist);
+
+            }
+        }else if(v.getId()==R.id.artist_list){
+            Intent intent=new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(artist.getUrl()));
+            startActivity(intent);
         }
+
     }
 
-    public interface OnFragmentInteractionListener{
-        void onFragmentInteraction(Uri uri);
-    }
 
     public void setTextFiltrar(String text){
         pais=text;
-        Log.i("Metodo coger pais",pais);
         mostrarDatos();
     }
 }
