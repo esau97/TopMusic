@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Top Music</string>
+    <string name="filterArtist">Búsqueda por países (Dejar vacío para top global)</string>
+    <string name="filterAlbum">Búsqueda por artista (Vacío para top global)</string>
+    <string name="internet_connection">No tienes conexión a internet.</string>
+    <string name="found">No se ha encontrado.</string>
+</resources>

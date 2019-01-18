@@ -5,12 +5,14 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,8 +39,6 @@ public class TopSongList extends Fragment implements SongAdapter.OnButtonClicked
     private SongAdapter adapter;
     private String pais;
 
-    Activity activity;
-
     public TopSongList() {
     }
 
@@ -50,7 +50,13 @@ public class TopSongList extends Fragment implements SongAdapter.OnButtonClicked
         pais="vacio";
         listaSong = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerSong);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mensaje = view.findViewById(R.id.textViewEmpty);
+        mensaje.setVisibility(View.GONE);
+        if(esTablet(getContext())){
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        }else{
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
 
         adapter = new SongAdapter(getContext(),listaSong, this);
         recyclerView.setAdapter(adapter);
@@ -71,14 +77,21 @@ public class TopSongList extends Fragment implements SongAdapter.OnButtonClicked
                 public void onChanged(@Nullable List<Song> songs) {
                     listaSong.clear();
                     if(songs!=null){
+                        mensaje.setVisibility(View.GONE);
                         listaSong.addAll(songs);
                         adapter.notifyDataSetChanged();
                     }else{
-                        mensaje.setText("No se ha encontrado ninguna canción");
+                        listaSong.addAll(songs);
+                        adapter.notifyDataSetChanged();
+                        mensaje.setVisibility(View.VISIBLE);
+                        mensaje.setText(R.string.found);
                     }
                 }
 
             });
+        }else {
+            mensaje.setVisibility(View.VISIBLE);
+            mensaje.setText(R.string.internet_connection);
         }
     }
 
@@ -92,7 +105,6 @@ public class TopSongList extends Fragment implements SongAdapter.OnButtonClicked
         if(v.getId()==R.id.song_list){
             Intent intent=new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(song.getUrl()));
-            Log.i("Mostrar",song.getUrl());
             startActivity(intent);
         }
     }
@@ -100,9 +112,12 @@ public class TopSongList extends Fragment implements SongAdapter.OnButtonClicked
 
     public void setTextFiltrar(String text){
         pais=text;
-        Log.i("Metodo coger pais",pais);
         mostrarDatos();
     }
-
+    public static boolean esTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
 
 }

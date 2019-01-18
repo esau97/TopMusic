@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ public class TopArtistFiltrar extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_top_artist_filtrar, container, false);
+        final View view = inflater.inflate(R.layout.fragment_top_artist_filtrar, container, false);
 
 
         final EditText editText = view.findViewById(R.id.editTextFiltrarArtist);
@@ -32,16 +33,15 @@ public class TopArtistFiltrar extends Fragment  {
 
                 if(editText.getText().toString().equals("")){
                     String valor = "vacio";
-
                     callback.onChange(valor);
-                    Toast.makeText(getContext(),"Vacío", Toast.LENGTH_SHORT).show();
                 }else{
                     String valor = editText.getText().toString();
 
                     callback.onChange(valor);
                     Toast.makeText(getContext(),editText.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
-
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
 
             }

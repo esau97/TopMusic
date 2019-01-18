@@ -5,12 +5,14 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
+import static android.view.View.GONE;
 
 public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClickedListener{
 
@@ -48,7 +51,14 @@ public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClic
         artista="vacio";
         listaAlbum = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerAlbums);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mensaje = view.findViewById(R.id.textViewEmpty);
+        mensaje.setVisibility(View.GONE);
+        if(esTablet(getContext())){
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        }else{
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+
 
         adapter = new AlbumAdapter(getContext(),listaAlbum,this);
         recyclerView.setAdapter(adapter);
@@ -62,22 +72,29 @@ public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClic
         ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= connectivityManager.getActiveNetworkInfo();
         boolean conectar= networkInfo!=null && networkInfo.isConnected();
+
         if(conectar){
             viewModelAlbum = ViewModelProviders.of(this).get(ViewModelAlbum.class);
-
             viewModelAlbum.getAlbum(artista).observe(this, new Observer<List<Album>>() {
                 @Override
                 public void onChanged(@Nullable List<Album> albums) {
                     listaAlbum.clear();
-                    if(albums!=null){
+                    if(albums!=null && albums.size()!=0){
+                        mensaje.setVisibility(View.GONE);
                         listaAlbum.addAll(albums);
                         adapter.notifyDataSetChanged();
                     }else{
-                        mensaje.setText("No se ha encontrado ningún álbum");
+                        listaAlbum.addAll(albums);
+                        adapter.notifyDataSetChanged();
+                        mensaje.setVisibility(View.VISIBLE);
+                        mensaje.setText(R.string.found);
                     }
                 }
 
             });
+        }else{
+            mensaje.setVisibility(View.VISIBLE);
+            mensaje.setText(R.string.internet_connection);
         }
     }
 
@@ -88,7 +105,6 @@ public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClic
 
     public void setTextFiltrar(String text){
         artista=text;
-        Log.i("Metodo coger artista",artista);
         mostrarDatos();
     }
 
@@ -98,8 +114,12 @@ public class TopAlbumsList extends Fragment implements AlbumAdapter.OnButtonClic
         if(v.getId()==R.id.album_list){
             Intent intent=new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(album.getUrl()));
-            Log.i("Mostrar",album.getUrl());
             startActivity(intent);
         }
+    }
+    public static boolean esTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 }

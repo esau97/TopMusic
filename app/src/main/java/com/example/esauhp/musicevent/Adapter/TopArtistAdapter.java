@@ -47,9 +47,14 @@ public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.View
     public void onBindViewHolder(@NonNull TopArtistAdapter.ViewHolder viewHolder, int i) {
         final Artist artist = artistList.get(i);
         viewHolder.orden.setText(i+1+"");
-        viewHolder.nameArtist.setText(artist.getNombreArtista());
-        Picasso.get().load(artist.getUrlImage()).into(viewHolder.imageArtist);
 
+        Picasso.get().load(artist.getUrlImage()).into(viewHolder.imageArtist);
+        String artistas = artist.getNombreArtista();
+        if(artistas.length()>22){
+            artistas = artistas.substring(0,22);
+            artistas = artistas +"...";
+        }
+        viewHolder.nameArtist.setText(artistas);
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,16 +62,14 @@ public class TopArtistAdapter extends RecyclerView.Adapter<TopArtistAdapter.View
             }
         });
         if(artist.isFavorite()){
-            viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_black_24dp);
+            viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_white_24dp);
         }else {
-            viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_black_24dp);
+            viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_border_white_24dp);
         }
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onButtonClicked(v,artist);
-
-
             }
         });
     }

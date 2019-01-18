@@ -26,8 +26,8 @@ public class ViewModelArtist extends AndroidViewModel {
     private static MutableLiveData<List<Artist>> listaArtist;
     private static LiveData<List<Artist>> listaArtistaFavoritos;
     private Application application;
-    private String apiKey = getApplication().getString(R.string.apiKey);
-    private String URL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=disco&api_key="+getApplication().getString(R.string.apiKey)+"&limit=10&format=json";
+
+    private String URL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=disco&api_key="+getApplication().getString(R.string.apiKey)+"&limit=30&format=json";
     private String URL2 ;
     DataBaseRoom dbRoom;
     private String texto;
@@ -45,21 +45,59 @@ public class ViewModelArtist extends AndroidViewModel {
         if(listaArtist==null || !this.texto.equals(texto)){
             this.texto=texto;
             listaArtist=new MutableLiveData<>();
-            loadArtist();
+            comprobarPais();
         }
 
         return listaArtist;
     }
 
-    private void loadArtist(){
+    private void comprobarPais(){
+
+        final String[] pais = new String[1];
+        if(texto.equals("vacio")){
+            loadArtist("vacio");
+        }else{
+            Uri base;
+            base = Uri.parse("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190118T121608Z.2f292786c0cf1823.aed1e452629c66caf9dac60415df51464ddd9195&text="+texto+"&lang=es-en");
+            Uri.Builder uriBuild = base.buildUpon();
+            final RequestQueue requ= Volley.newRequestQueue(application);
+            StringRequest request=new StringRequest(Request.Method.GET, uriBuild.toString(), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    pais[0] = QueryUtils.extraerPais(response);
+                    loadArtist(pais[0]);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("Error ViewModel",error.getMessage());
+                }
+            });
+            requ.add(request);
+
+
+        }
+
+    }
+
+    public LiveData<List<Artist>> getArtistFav(){
+        return  listaArtistaFavoritos;
+    }
+    public void addArtist(Artist artist){
+        new AsyncAddArtist().execute(artist);
+    }
+    public void deleteArtist(Artist artist){
+        new DeleteAsyncArtist().execute(artist);
+    }
+
+    public void loadArtist(String paisBusqueda){
         Uri baseUri;
         if(texto.equals("vacio")){
             baseUri= Uri.parse(URL);
-        }else{
-            URL2="http://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country="+texto+"&api_key="+application.getString(R.string.apiKey)+"&limit=10&format=json";
+        }else {
+            URL2 = "http://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=" + paisBusqueda + "&api_key=" + application.getString(R.string.apiKey) + "&limit=30&format=json";
             baseUri = Uri.parse(URL2);
         }
-
         Uri.Builder uriBuilder = baseUri.buildUpon();
         final RequestQueue requestQueue= Volley.newRequestQueue(application);
         StringRequest request=new StringRequest(Request.Method.GET, uriBuilder.toString(), new Response.Listener<String>() {
@@ -76,15 +114,8 @@ public class ViewModelArtist extends AndroidViewModel {
         });
         requestQueue.add(request);
 
-    }
-    public LiveData<List<Artist>> getArtistFav(){
-        return  listaArtistaFavoritos;
-    }
-    public void addArtist(Artist artist){
-        new AsyncAddArtist().execute(artist);
-    }
-    public void deleteArtist(Artist artist){
-        new DeleteAsyncArtist().execute(artist);
+
+
     }
 
 

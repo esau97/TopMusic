@@ -5,16 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:background="#000"
+    android:padding="6dp">
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardAlbum"
+        android:background="#252525"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
         <LinearLayout
+            android:background="#252525"
             android:id="@+id/album_list"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -25,7 +28,6 @@
             >
 
             <TextView
-
                 android:id="@+id/ordenAlbum"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -33,6 +35,7 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="16sp"
+                android:textColor="#FFF"
                 tools:text="1" />
             <ImageView
                 android:id="@+id/imagenAlbum"
@@ -46,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
+                android:background="#252525"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -57,13 +61,14 @@
                     android:text="Album Name"
                     android:maxLines="2"
                     android:textSize="16sp"
+                    android:textColor="#FFF"
                     />
                 <TextView
                     android:id="@+id/artistNameAlbum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-
+                    android:textColor="#FFF"
                     android:textSize="16sp"
                     tools:text="Artist name" />
 

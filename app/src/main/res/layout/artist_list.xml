@@ -5,15 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:background="#000"
+    android:padding="6dp">
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardArtist"
         android:layout_width="match_parent"
+        android:background="#252525"
         android:layout_height="match_parent" >
 
     <LinearLayout
+        android:background="#252525"
         android:id="@+id/artist_list"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -23,10 +26,10 @@
         android:padding="8dp">
 
         <TextView
-
+            android:textColor="#FFF"
             android:id="@+id/ordenArtist"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:textStyle="bold"
             android:gravity="center"
@@ -50,6 +53,7 @@
 
 
             <TextView
+                android:textColor="#FFF"
                 android:id="@+id/artistNameArtist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +68,7 @@
             android:id="@+id/imagenFavoritoArtist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_star_border_black_24dp"
+            android:background="@drawable/ic_star_border_white_24dp"
             android:layout_gravity="center"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TopSongFiltrar">
+    tools:context=".TopSongFiltrar"
+    android:background="#000">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -18,14 +19,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:hint="Search by countries (Empty by global search)"
+            android:textSize="18sp"
+            android:hint="@string/filterArtist"
             android:textColorHint="#555555"
             android:textColor="#FFF"/>
         <ImageButton
             android:layout_marginRight="8dp"
             android:id="@+id/imageBuscarSong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@drawable/ic_search_white_24dp"
             android:layout_gravity="center"/>
 

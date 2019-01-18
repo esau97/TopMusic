@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.internal.BottomNavigationPresenter;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.esauhp.musicevent.Adapter.FavoriteAdapter;
+import com.example.esauhp.musicevent.Adapter.TopArtistAdapter;
 import com.example.esauhp.musicevent.Artist;
 import com.example.esauhp.musicevent.R;
+import com.example.esauhp.musicevent.TopArtistFiltrar;
+import com.example.esauhp.musicevent.TopArtistList;
 import com.example.esauhp.musicevent.ViewModel.ViewModelArtist;
 
 import java.util.ArrayList;
@@ -88,14 +92,13 @@ public class FavoriteArtistFragment extends Fragment implements FavoriteAdapter.
 
 
     @Override
-    public void onButtonClicked(View v, Artist artist) {
+    public void onButtonClicked(View v, final Artist artist) {
         ImageView imageView = v.findViewById(R.id.favoriteArtist);
         if(v.getId()==(R.id.favoriteArtist)){
             if(artist.isFavorite()){
-                imageView.setImageResource(R.drawable.ic_star_border_black_24dp);
+                imageView.setImageResource(R.drawable.ic_star_border_white_24dp);
                 artist.setFavorite(false);
                 viewModelArtist.deleteArtist(artist);
-                artist.setFavorite(false);
 
             }
         }

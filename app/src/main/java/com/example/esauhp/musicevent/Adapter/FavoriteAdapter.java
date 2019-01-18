@@ -42,7 +42,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         final Artist artist = artistList.get(i);
         viewHolder.nameArtistFavorite.setText(artist.getNombreArtista());
         Picasso.get().load(artist.getUrlImage()).into(viewHolder.imageArtist);
-        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_black_24dp);
+        viewHolder.imagenFavorite.setImageResource(R.drawable.ic_star_white_24dp);
         viewHolder.imagenFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

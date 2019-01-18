@@ -45,8 +45,18 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull SongAdapter.ViewHolder viewHolder, int i) {
         final Song song= songList.get(i);
         viewHolder.orden.setText(i+1+"");
-        viewHolder.artistNameSong.setText(song.getArtistName());
-        viewHolder.songNameSong.setText(song.getSongName());
+        String artistas = song.getArtistName();
+        if(artistas.length()>22){
+            artistas = artistas.substring(0,22);
+            artistas = artistas +"...";
+        }
+        viewHolder.artistNameSong.setText(artistas);
+        String songs = song.getSongName();
+        if(songs.length()>22){
+            songs = songs.substring(0,22);
+            songs = songs +"...";
+        }
+        viewHolder.songNameSong.setText(songs);
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

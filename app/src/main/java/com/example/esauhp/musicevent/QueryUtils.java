@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 public class QueryUtils {
     public static DataBaseRoom dbr;
     public static Context context;
+
     public QueryUtils(){}
 
     public static List<Album> extraerAlbums(String result,String artista){
@@ -44,9 +45,6 @@ public class QueryUtils {
                     listaAlbums.add(album);
 
                 }
-                for (int i = 0; i < listaAlbums.size(); i++) {
-                    Log.i("Prueba",listaAlbums.get(i).getNombreAlbum().toString());
-                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -73,9 +71,6 @@ public class QueryUtils {
                     album.setUrlImage(p.getString("#text"));
                     listaAlbums.add(album);
 
-                }
-                for (int i = 0; i < listaAlbums.size(); i++) {
-                    Log.i("Prueba",listaAlbums.get(i).getNombreAlbum().toString());
                 }
 
             } catch (JSONException e) {
@@ -145,9 +140,6 @@ public class QueryUtils {
                 listaSong.add(song);
 
             }
-            for (int i = 0; i < listaSong.size(); i++) {
-                Log.i("Prueba",listaSong.get(i).getSongName().toString());
-            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -161,6 +153,20 @@ public class QueryUtils {
             Artist artist = dbr.artistDAO().getArtistFav(strings[0]);
             return artist;
         }
+    }
+
+    public static String extraerPais(String result){
+        String pais="";
+        try{
+            JSONObject root = new JSONObject(result);
+            JSONArray array = root.getJSONArray("text");
+            pais = array.getString(0);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return pais;
     }
 
 }

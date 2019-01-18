@@ -1,5 +1,9 @@
 <resources>
+    <string name="filterArtist">Search by countries (Empty by global search)</string>
+    <string name="filterAlbum">Search by artist (Empty by global search)</string>
     <string name="app_name">Top Music</string>
+    <string name="internet_connection">Not have internet connection.</string>
+    <string name="found">Not found.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

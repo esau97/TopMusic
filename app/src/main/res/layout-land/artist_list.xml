@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#000"
+    android:padding="6dp">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardArtist"
+        android:layout_width="match_parent"
+        android:background="#252525"
+        android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:background="#252525"
+        android:id="@+id/artist_list"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:textColor="#FFF"
+            android:id="@+id/ordenArtist"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:text="1" />
+
+        <ImageView
+            android:layout_marginStart="8dp"
+            android:id="@+id/imagenArtist"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:textColor="#FFF"
+                android:id="@+id/artistNameArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:textSize="22sp"
+                tools:text="Artist name" />
+
+        </LinearLayout>
+        <ImageView
+            android:layout_marginStart="8dp"
+            android:id="@+id/imagenFavoritoArtist"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/ic_star_border_white_24dp"
+            android:layout_gravity="center"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

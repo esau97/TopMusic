@@ -46,15 +46,25 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         final Album album = albumList.get(i);
         viewHolder.orden.setText(i+1+"");
         viewHolder.nameArtist.setText(album.getNombreArtista());
-        viewHolder.nameAlbum.setText(album.getNombreAlbum());
+        String albumes = album.getNombreAlbum();
+        if(albumes.length()>22){
+            albumes = albumes.substring(0,22);
+            albumes = albumes +"...";
+        }
+        viewHolder.nameAlbum.setText(albumes);
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("Mostrar",album.getUrl());
                 listener.onButtonClicked(v,album);
             }
         });
-        Picasso.get().load(album.getUrlImage()).into(viewHolder.imageAlbum);
+        if(album.getUrlImage().equals("")){
+            viewHolder.imageAlbum.setImageResource(R.drawable.auricularesinterrogacion);
+
+        }else{
+            Picasso.get().load(album.getUrlImage()).into(viewHolder.imageAlbum);
+        }
+
 
     }
 

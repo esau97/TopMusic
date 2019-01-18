@@ -19,25 +19,28 @@ import com.example.esauhp.musicevent.R;
 
 import java.util.List;
 
+
+
 public class ViewModelAlbum extends AndroidViewModel {
     private static MutableLiveData<List<Album>> listaAlbum;
     private Application application;
     private String apiKey = "ee5a521b423f66ab12730b69b24cbcfb";
-    private String URL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&tag=disco&api_key="+apiKey+"&limit=10&format=json";
+    private String URL = "http://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&tag=disco&api_key="+apiKey+"&limit=30&format=json";
     private String URL2 ;
     private String texto;
+
 
     public ViewModelAlbum(Application application) {
         super(application);
         this.texto="vacio";
         this.application = application;
+
     }
 
     public LiveData<List<Album>> getAlbum(String texto){
 
         if(listaAlbum==null || !this.texto.equals(texto)){
             this.texto=texto;
-            int num =4;
             listaAlbum=new MutableLiveData<>();
             loadAlbums();
         }
@@ -46,13 +49,14 @@ public class ViewModelAlbum extends AndroidViewModel {
     }
 
     private void loadAlbums(){
-        Log.i("Metodo mostrar datos",this.texto);
         Uri baseUri;
+
+
         if(texto.equals("vacio")){
             baseUri= Uri.parse(URL);
         }else{
 
-            URL2="http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist="+texto+"&api_key="+application.getString(R.string.apiKey)+"&limit=10&format=json";
+            URL2="http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist="+texto+"&api_key="+application.getString(R.string.apiKey)+"&limit=30&format=json";
             baseUri = Uri.parse(URL2);
         }
 
@@ -67,7 +71,7 @@ public class ViewModelAlbum extends AndroidViewModel {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("Error ViewModel",error.getMessage());
+                Log.i("ViewModel",error.getMessage());
             }
         });
         requestQueue.add(request);

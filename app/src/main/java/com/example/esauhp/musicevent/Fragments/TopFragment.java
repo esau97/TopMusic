@@ -31,6 +31,7 @@ public class TopFragment extends Fragment {
         View contenedor = (View) container.getParent();
         appBar = (AppBarLayout) contenedor.findViewById(R.id.appbar);
         tabs = new TabLayout(getActivity());
+
         tabs.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
         appBar.addView(tabs);
 
@@ -54,7 +55,7 @@ public class TopFragment extends Fragment {
             super(fragmentManager);
         }
 
-        String [] tituloTabs = {"ALBUMS","ARTIST","SONGS"};
+        String [] tituloTabs = {"TOP ALBUMS","TOP ARTIST","TOP SONGS"};
 
         @Override
         public Fragment getItem(int i) {
