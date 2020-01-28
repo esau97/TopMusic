@@ -30,7 +30,7 @@ public class ViewModelAlbum extends AndroidViewModel {
     private String texto;
 
 
-    public ViewModelAlbum(Application application) {
+    public ViewModelAlbum(Application application) { // Inicializo las variables en el constructor
         super(application);
         this.texto="vacio";
         this.application = application;

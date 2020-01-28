@@ -23,10 +23,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
     private List<Album> albumList;
     private OnButtonClickedListener listener;
 
-    public AlbumAdapter(Context context, List<Album> objects) {
-        this.context=context;
-        this.albumList = objects;
-    }
+
     public AlbumAdapter(Context context, List<Album> objects, OnButtonClickedListener listener) {
         this.context=context;
         this.albumList = objects;
@@ -79,8 +76,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
 
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView orden;
@@ -97,8 +92,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
             imageAlbum = (ImageView) itemView.findViewById(R.id.imagenAlbum);
             nameAlbum = (TextView) itemView.findViewById(R.id.albumNameAlbum);
             nameArtist = (TextView) itemView.findViewById(R.id.artistNameAlbum);
-
-
         }
 
     }

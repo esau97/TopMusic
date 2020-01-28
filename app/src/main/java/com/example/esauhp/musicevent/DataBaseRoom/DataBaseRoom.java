@@ -9,7 +9,7 @@ import com.example.esauhp.musicevent.Artist;
 import com.example.esauhp.musicevent.ArtistDAO;
 
 @Database(entities = {Artist.class}, version = 2, exportSchema = false)
-
+// Creo la base de datos
 public abstract class DataBaseRoom extends RoomDatabase {
 
     public abstract ArtistDAO artistDAO();

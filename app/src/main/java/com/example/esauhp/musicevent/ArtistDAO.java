@@ -10,6 +10,7 @@ import java.util.List;
 
 @Dao
 public interface ArtistDAO {
+
     @Insert
     public long insertArtist(Artist artist);
 

@@ -25,6 +25,7 @@ public class TopAlbumFragment extends Fragment implements TopAlbumsFiltrar.OnNam
     public void onChange(String text) {
         TopAlbumsList topAlbumsList= (TopAlbumsList) getChildFragmentManager().findFragmentById(R.id.fragment2);
         if(topAlbumsList!=null){
+            //
             topAlbumsList.setTextFiltrar(text);
         }
 

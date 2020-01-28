@@ -31,32 +31,36 @@ public class ViewModelArtist extends AndroidViewModel {
     private String URL2 ;
     DataBaseRoom dbRoom;
     private String texto;
-
+    // Constructor donde inicializo los parámetros
     public ViewModelArtist(Application application) {
         super(application);
         this.texto="vacio";
         this.application = application;
         dbRoom = DataBaseRoom.getInstance(application);
-        listaArtistaFavoritos = dbRoom.artistDAO().getArtist();
+        listaArtistaFavoritos = dbRoom.artistDAO().getArtist(); // Obtengo los artistas favoritos de la base de datos
     }
-
+    // Devuelvo la lista con todos los artistas
     public LiveData<List<Artist>> getArtist(String texto){
 
         if(listaArtist==null || !this.texto.equals(texto)){
             this.texto=texto;
-            listaArtist=new MutableLiveData<>();
-            comprobarPais();
+            listaArtist=new MutableLiveData<>(); // Es una clase donde almacenas los datos que se pueden observar
+            comprobarPais(); // Llamada al método comprobar país en el que compruebo el país introducido
         }
 
         return listaArtist;
     }
 
+    // Compruebo si ha introducido algún país en el Edit Text para usar una api u otra
     private void comprobarPais(){
 
         final String[] pais = new String[1];
+        // Compruebo si la variable texto contiene la palabra "vacío" para usar una api u otra
         if(texto.equals("vacio")){
+            // Si está vacío llamo directamente al método que me carga los artistas
             loadArtist("vacio");
         }else{
+            // Si no está vacío traduzco el texto introducido en el editText al inglés ya que la API funciona en inglés
             Uri base;
             base = Uri.parse("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190118T121608Z.2f292786c0cf1823.aed1e452629c66caf9dac60415df51464ddd9195&text="+texto+"&lang=es-en");
             Uri.Builder uriBuild = base.buildUpon();
@@ -65,6 +69,7 @@ public class ViewModelArtist extends AndroidViewModel {
                 @Override
                 public void onResponse(String response) {
                     pais[0] = QueryUtils.extraerPais(response);
+                    // Una vez obtenido el nombre del país en inglés llamamos al método cargar artistas
                     loadArtist(pais[0]);
                 }
             }, new Response.ErrorListener() {
@@ -82,17 +87,20 @@ public class ViewModelArtist extends AndroidViewModel {
 
     public LiveData<List<Artist>> getArtistFav(){
         return  listaArtistaFavoritos;
-    }
+    } // Devuelvo una lista con los artistas Favoritos
     public void addArtist(Artist artist){
         new AsyncAddArtist().execute(artist);
-    }
+    } // Llamo a la clase asincrona para guardar los artistas en la base de datos
     public void deleteArtist(Artist artist){
         new DeleteAsyncArtist().execute(artist);
-    }
+    } // Llamo a la clase asincrona para eliminar a los artistas
+
 
     public void loadArtist(String paisBusqueda){
         Uri baseUri;
+        // Vuelvo a comprobar si el texto está vacío para usar una API u otra
         if(texto.equals("vacio")){
+            // Parseo el String
             baseUri= Uri.parse(URL);
         }else {
             URL2 = "http://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=" + paisBusqueda + "&api_key=" + application.getString(R.string.apiKey) + "&limit=30&format=json";
@@ -118,7 +126,7 @@ public class ViewModelArtist extends AndroidViewModel {
 
     }
 
-
+    // Clase asincrona encargada de añadir los artistas a la base de datos
     private class AsyncAddArtist extends AsyncTask<Artist,Void,Long> {
         Artist artist;
 
@@ -150,7 +158,7 @@ public class ViewModelArtist extends AndroidViewModel {
         }
 
     }
-
+    // Clase asincrona encargada de eliminar los artistas a la base de datos
     private class DeleteAsyncArtist extends AsyncTask<Artist,Void,Void>{
         @Override
         protected Void doInBackground(Artist... artists){

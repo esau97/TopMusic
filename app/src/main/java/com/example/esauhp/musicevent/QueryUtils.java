@@ -21,8 +21,8 @@ public class QueryUtils {
     public QueryUtils(){}
 
     public static List<Album> extraerAlbums(String result,String artista){
+
         List<Album> listaAlbums = new ArrayList<>();
-        Log.i("Metodo mostrar datos",artista);
         if(artista.equals("vacio")){
             try{
                 JSONObject root = new JSONObject(result);
@@ -86,7 +86,6 @@ public class QueryUtils {
         List<Artist> listaArtist = new ArrayList<>();
         String name, url, image;
 
-
         try{
             JSONObject root = new JSONObject(result);
             JSONObject artist = root.getJSONObject("topartists");
@@ -108,7 +107,7 @@ public class QueryUtils {
                 }
             }
 
-        } catch (JSONException e) {
+        } catch (JSONException e) { // Se captura algun error producido al extraer la informacion del json
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -147,6 +146,7 @@ public class QueryUtils {
         return listaSong;
     }
 
+    // Clase asíncrona encargada de comprobar si ya está en favorito el artista
     private static class ComprobarFav extends AsyncTask<String,Void, Artist> {
         @Override
         protected Artist doInBackground(String... strings) {
@@ -155,6 +155,7 @@ public class QueryUtils {
         }
     }
 
+    // Extraígo los datos de la api de la traduccion
     public static String extraerPais(String result){
         String pais="";
         try{
